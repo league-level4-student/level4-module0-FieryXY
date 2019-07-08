@@ -3,10 +3,14 @@ package _02_Pixel_Art;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-public class GridPanel extends JPanel{
+public class GridPanel extends JPanel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;
@@ -53,6 +57,14 @@ public class GridPanel extends JPanel{
 		//5. Use the mouseX and mouseY variables to change the color
 		//   of the pixel that was clicked. *HINT* Use the pixel's dimensions.
 		pixels[mouseX][mouseY].color = Color.RED;
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PixelArtMaker.DATA_FILE));
+			oos.writeObject(this);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
